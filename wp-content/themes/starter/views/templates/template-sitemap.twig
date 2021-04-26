@@ -1,0 +1,60 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+    {# Page content #}
+
+    {% if post.content is not empty %}
+        {{ post.content }}
+    {% endif %}
+
+    {# Pages #}
+
+    <h2>{{ __('Pages', 'idx') }}</h2>
+
+    <ul>
+        {% for page in pages %}
+            <li><a href="{{ page.link }}">{{ page.title }}</a></li>
+        {% endfor %}
+    </ul>
+
+    {# All custom post type #}
+
+    {# arrayNumber to find the correct label name #}
+    {% set arrayNumber = 0 %}
+
+    {% for single_cpt in cpt %}
+
+        {% if single_cpt is not null %}
+
+            <h2>{{ cptLabels[arrayNumber][0].labels.name }}</h2>
+
+            <ul>
+                {% for cpt_elt in single_cpt %}
+                    <li><a href="{{ cpt_elt.link }}">{{ cpt_elt.title }}</a></li>
+                {% endfor %}
+            </ul>
+
+        {% endif %}
+
+        {% set arrayNumber = arrayNumber + 1 %}
+
+    {% endfor %}
+
+    {# All taxonomies #}
+
+    {% if taxo is not null %}
+
+        <h2>{{ __('Undefined title', 'idx') }}</h2>
+
+        <ul>
+        {% for taxonomy in taxo %}
+            <li><a href="{{ function('get_term_link',taxonomy) }}">{{ taxonomy.name }}</a></li>
+        {% endfor %}
+        </ul>
+
+    {% endif %}
+
+
+
+{% endblock %}

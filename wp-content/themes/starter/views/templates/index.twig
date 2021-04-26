@@ -1,0 +1,32 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+    <h1>{{ __('Articles','idx') }}</h1>
+
+    {# Articles list #}
+    {% for post in posts %}
+        <article>
+            <time datetime="{{ post.date('Y-m-d H:i:s') }}">{{ post.date }}</time>
+            <ul>
+                {% for term in post.terms({ taxonomy: 'category' }) %}
+                <li>
+                    <a href="{{ term.link }}">{{ term.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            <a href="{{ post.link }}">
+                {% if post.thumbnail is not empty %}
+                <img src="{{ post.thumbnail.src('medium') }}" alt="{{ post.thumbnail.alt }}">
+                {% endif %}
+                <h2>{{ post.title }}</h2>
+                <p>{{ post.post_content|excerpt(30) }}</p>
+            </a>
+        </article>
+    {% endfor %}
+
+    {# Pagination #}
+    {% set pagination_args = {'screen_reader_text': __('Pagination','idx')} %}
+    {{ fn('the_posts_pagination', pagination_args) }}
+
+{% endblock %}

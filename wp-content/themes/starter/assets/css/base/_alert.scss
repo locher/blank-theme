@@ -1,0 +1,46 @@
+%alert{
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+.alert {
+  @each $name, $background-color, $color, $border, $percent, $brightness in $alert-list {
+    &--#{$name} {
+      @extend %alert;
+      color: $color;
+
+      $property-brightness:$brightness;
+
+      @if ($brightness == darken) {
+        background:darken($background-color, $percent);
+        color: lighten($color,30%);
+      }
+      @else if($brightness == lighten){
+        background:lighten($background-color, $percent);
+        color: darken($color,30%);
+      }
+      @else{
+        background: $background-color;
+      }
+
+      &.is-dismissible{
+        padding-right: 10%;
+        .close{
+          position: absolute;
+          top: 0;
+          right: 0;
+          padding: 0.75rem 1.25rem;
+          color: darken($color,40%);
+          height: 100%;
+          min-width: 10%;
+        }
+      }
+      &.is-fade {
+        transition: opacity 0.15s linear;
+      }
+    }//&--#{$name}
+  }//@each
+}//.alert

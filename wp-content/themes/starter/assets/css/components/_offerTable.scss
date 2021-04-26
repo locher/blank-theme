@@ -1,0 +1,43 @@
+
+// Offer table
+
+.offer-group{
+  display: flex;
+  justify-content: space-between;
+
+  > div{
+    width: 100%;
+    min-width: 200px;
+    word-break: break-word;
+    padding: 1em;
+  }
+}
+
+@media (min-width: 1000px){
+
+  .offer-table{
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+
+    h2, h3, h4{
+      grid-column-start: 1;
+    }
+  }
+
+  .offer-group{
+    grid-column-start: 2;
+  }
+
+}
+
+@media (max-width: 1000px) {
+  .offer-table{
+    overflow-x: scroll;
+
+    h2, h3, h4{
+      position: sticky;
+      left: 0;
+    }
+
+  }
+}

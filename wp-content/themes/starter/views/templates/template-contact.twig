@@ -1,0 +1,12 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+    <article>
+        <h1>{{ post.title }}</h1>
+        {{ post.content }}
+    </article>
+
+    {{ fn('do_shortcode',post.meta('contact_form')) }}
+
+{% endblock %}

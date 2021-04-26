@@ -1,0 +1,28 @@
+<header role="banner">
+
+    {# Logo is h1 in frontpage, and div for the other pages#}
+    {% if function('is_front_page') %}
+        {% set markup = 'h1' %}
+    {% else %}
+        {% set markup = 'div' %}
+    {% endif %}
+
+    <{{markup}}>
+        <a href="{{ site.link }}">
+            <img src="#" alt="{{ site.title }}">
+        </a>
+    </{{markup}}>
+
+    {# Menu #}
+    {{ menus.main }}
+
+    {# Language switcher #}
+    {{ fn('do_action','wpml_add_language_selector') }}
+
+    {# Breadcrumb #}
+    {{ fn('do_action','idx_breacrumb_place') }}
+
+    {# Search field #}
+    {% include "template-parts/search-form.twig" %}
+
+</header>

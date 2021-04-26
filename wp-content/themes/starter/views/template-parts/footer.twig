@@ -1,0 +1,22 @@
+<footer>
+
+    {# Legal sentence #}
+    {% if options.legal_sentence is not empty %}
+    <p>© {{ 'now'|date('Y') }} {{ options.legal_sentence }}</p>
+    {% endif %}
+
+    {# Social network links #}
+    {% if options.social_networks.facebook is not empty or options.social_networks.linkedin is not empty or options.social_networks.instagram is not empty or options.social_networks.twitter is not empty  %}
+    <ul>
+        {% for key,social in options.social_networks %}
+            {% if social is not empty %}
+            <li class="{{ key }}"><a href="{{ social }}" target="_blank">{{ key }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {# Menu footer #}
+    {{ menus.footer }}
+    
+</footer>

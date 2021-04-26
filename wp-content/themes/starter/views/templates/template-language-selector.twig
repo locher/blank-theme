@@ -1,0 +1,38 @@
+{% extends "base.twig" %}
+
+{% block head %}
+    {% if languages is not null %}
+        {% for lang in languages %}
+            <link rel="alternate" hreflang="{{ lang.default_locale }}" href="{{ lang.url }}">
+        {% endfor %}
+    {% endif %}
+{% endblock head %}
+
+{% block header %}{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block content %}
+
+    <h1 class="hdr-logo m-0" role="banner">
+        <img src="#" alt="{{ site.title }}">
+    </h1>
+
+    {{ post.content }}
+
+    {% if languages is not null %}
+
+        <ul class="list-select-language">
+            {% for lang in languages %}
+                <li>
+                    <a href="{{ lang.url }}">
+                        <img src="{{ lang.country_flag_url }}" alt="">
+                        <span>{{ lang.native_name }}</span>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+
+    {% endif %}
+
+{% endblock content%}

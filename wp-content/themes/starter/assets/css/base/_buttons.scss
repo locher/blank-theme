@@ -1,0 +1,118 @@
+%btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 4.1rem;
+  min-width: 16.5rem;
+  max-width: 28rem;
+  padding: 0 2rem;
+
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 4.1rem;
+
+  font-family: inherit;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-transform: uppercase;
+
+  transition: 0.25s;
+
+  cursor: pointer;
+}
+.account{
+  /* Accessibilité : gestion du focus */
+  .button,
+  [type="button"],
+  .btn,
+  button {
+    @extend %btn;
+    transition-property: background-color, color, border;
+    &:focus {
+      -webkit-tap-highlight-color: transparent;
+    }
+  }//btn, button
+
+  button[aria-label="Close"] {
+    border-style: none;
+  }//button[aria-label="Close"]
+}
+
+
+
+.btn{
+  @each $name, $background-color, $color, $border-color, $brightness,  $background-color-hover, $border-color-hover, $percent,  $color-hover in $btn-list {
+      &--#{''+$name+''} {
+        @extend %btn;
+        background-color: $background-color;
+        color: $color;
+        border-color: $border-color;
+
+
+        [class*='icon-']{
+          margin-right: 0.8rem;
+          &:before{
+            font-size: 1.6rem;
+          }
+        }//[class*='icon-']
+        [class*='icon-right-']{
+          margin-left: 0.8rem;
+          &:before{
+            font-size: 1.6rem;
+          }
+        }//[class*='icon-right-']
+
+        &:active,
+        &:focus,
+        &:hover {
+          $property-brightness:$brightness;
+
+          @if ($property-brightness == darken) {
+            background:darken($background-color-hover, $percent);
+            border-color:darken($border-color-hover, $percent);
+          }
+          @else if($property-brightness == lighten){
+            background:lighten($background-color-hover, $percent);
+            border-color:lighten($border-color-hover, $percent);
+          }
+          @else{
+            background: $background-color-hover;
+            border-color: $border-color-hover;
+          }
+
+          color: $color-hover;
+
+        }//&:active, &:focus, &:hover
+
+
+        &.is-disabled{
+          background-color: $color-disabled-background;
+          color: $color-disabled-content;
+          border-color: $color-disabled-background;
+          pointer-events: none;
+        }//&.is-disabled
+
+        [role="progressbar"]{
+          transform: scale(0.8) !important;
+
+          div > div{
+            background: $color-disabled-content !important;
+          }
+        }//[role="progressbar"]
+      }//&--#{$name}
+  }//each
+}//.btn
+
+button[data-dismiss="alert"]{
+  height: auto;
+  min-width: auto;
+}
+
+.link-title{
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  &.white{
+    color: $color-white;
+  }
+}

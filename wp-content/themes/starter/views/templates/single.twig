@@ -1,0 +1,22 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+    <article>
+        <header>
+            <h1>{{ post.title }}</h1>
+            <time datetime="{{ post.date('Y-m-d H:i:s') }}">{{ post.date }}</time>
+            <ul>
+                {% for term in post.terms({ taxonomy: 'category' }) %}
+                    <li>
+                        <a href="{{ term.link }}">{{ term.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </header>
+
+        {{ post.content }}
+
+    </article>
+
+{% endblock %}

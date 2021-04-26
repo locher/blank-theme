@@ -1,0 +1,55 @@
+.navbar-toggler{
+  position: relative;
+  transition: .3s;
+  &:hover, &:active, &:focus{
+    background-color: transparent;
+    border-color: transparent;
+  }
+  .navbar-toggler-icon{
+    display: inline-block;
+    width: 20px;
+    height: 2px;
+    border-radius: 5px;
+    background-color: $color-secondary;
+    position: relative;
+    &:before, &:after{
+      position: absolute;
+      left: 0;
+      content: '';
+
+      transform-origin: 50% 50%;
+      transition: top 0.3s 0.6s ease-in-out,transform 0.3s ease-in-out;
+
+      display: inline-block;
+      width: 20px;
+      height: 2px;
+      border-radius: 5px;
+      background-color: $color-secondary;
+    }
+    &:before{
+      top: 6px;
+    }
+    &:after{
+      top: -6px;
+    }
+  }
+  &[aria-expanded="true"]{
+    .navbar-toggler-icon{
+      transition: background 0.3s 0s ease-in-out;
+      background: $color-ghost !important;
+
+      &:before, &:after{
+        transition: top 0.3s ease-in-out,transform 0.3s 0.5s ease-in-out;
+        top: 0;
+        width: 20px;
+      }
+
+      &:before{
+        transform: rotate3d(0, 0, 1, 45deg);
+      }
+      &:after{
+        transform: rotate3d(0, 0, 1, -45deg);
+      }
+    }
+  }
+}

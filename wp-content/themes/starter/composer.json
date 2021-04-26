@@ -1,0 +1,12 @@
+{
+    "name": "sfk/idx-starter",
+    "type": "wordpress-theme",
+    "license": "proprietary",
+
+    "require": {
+        "timber/timber": "^1.16"
+    },
+    "require-dev": {
+        "kint-php/kint": "^3.3"
+    }
+}

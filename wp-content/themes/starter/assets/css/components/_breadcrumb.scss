@@ -1,0 +1,13 @@
+.breadcrumb{
+  background: transparent;
+  padding-left: 0;
+  margin-left: 0;
+  font-size: 1.2rem;
+  margin-bottom: 60px;
+  a{
+    text-decoration: underline;
+    &:hover{
+      text-decoration: none;
+    }
+  }
+}

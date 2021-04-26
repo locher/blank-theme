@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html {{site.language_attributes}}>
+
+    <head>
+        <meta charset="{{site.charset}}">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="icon" type="image/png" href="{{site.theme.link}}/assets/img/favicon.png">
+
+        {% block head %}{% endblock %}
+
+        {{wp_head}}
+
+    </head>
+
+    <body class="{{body_class}}">
+
+        {{fn('wp_body_open')}}
+
+        {% block header %}
+            {% include "template-parts/header.twig" %}
+        {% endblock %}
+
+        {% block content %}{% endblock %}
+
+        {% block footer %}
+            {% include "template-parts/footer.twig" %}
+        {% endblock %}
+
+        {{wp_footer}}
+
+    </body>
+
+</html>

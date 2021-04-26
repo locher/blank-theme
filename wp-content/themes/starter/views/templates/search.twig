@@ -1,0 +1,21 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+    <h1>{{ __('Search results for','idx') }} "<span>{{ fn('get_search_query') }}</span>"</h1>
+
+    {# Articles list #}
+    {% for post in posts %}
+        <article>
+            <a href="{{ post.link }}">
+                <h2>{{ post.title }}</h2>
+                <p>{{ post.post_content|excerpt(30) }}</p>
+            </a>
+        </article>
+    {% endfor %}
+
+    {# Pagination #}
+    {% set pagination_args = {'screen_reader_text': __('Pagination','idx')} %}
+    {{ fn('the_posts_pagination', pagination_args) }}
+
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends "base.twig" %}
+
+{% block body_class %}offers{% endblock %}
+
+{% block content %}
+
+    {% include "template-parts/top-title.twig" %}
+
+    {% set offer_post = post.meta('avantages') %}
+
+    {% if post.meta('premier_mois') is not empty %}
+        <div class="col-12 col-md-3 offset-lg-2 free-first-month">
+            <p>{{ post.meta('premier_mois').ligne_1 }}<br> {{ post.meta('premier_mois').ligne_2 }}</p>
+        </div>
+    {% endif %}
+
+    {% set nb_offers = offers|length %}
+
+    <div class="col-12 col-lg-9">
+        {{ post.haut_de_page }}
+    </div>
+
+    <div class="offer-table">
+
+        <div class="offer-group offer-header">
+
+            {% for offer in offers %}
+
+                {# TODO Apply this everywhere it's needed #}
+
+                {% if offer.offre_mise_en_avant %}
+                    {% set featured_offer = 'featured-offer' %}
+                {% else %}
+                    {% set featured_offer = '' %}
+                {% endif %}
+
+                <div class="{{ featured_offer }}">
+                    <b>{{ offer.title }}</b>
+                    <div class="prix">
+                        <p>{{ offer.prix_dappel }}</p>
+                        <p>{{ offer.prix_final }}</p>
+                        {% if offer.echeancier is not empty %}
+                            <p>{{ offer.echeancier }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+
+
+
+        {# Gain #}
+
+
+        <h4>{{ __('Montant d\'avantages cumulés / année','idx') }}</h4>
+
+        <div class="offer-group">
+            {% for offer in offers %}
+                <div>{{ offer.montants_davantages_cumules_annee }}</div>
+            {% endfor %}
+        </div>
+
+
+        {# Advantages list #}
+
+        {% for advantage in offer_post %}
+
+            <h2>{{ advantage.titre_avantage }}</h2>
+            {% set level1 = fn('sanitize_title',advantage.titre_avantage) %}
+
+            {% for sub_advantage in advantage.sous_avantages %}
+
+                <h3>{{ sub_advantage.sous_titre_avantage }}</h3>
+                {% set level2 = fn('sanitize_title',sub_advantage.sous_titre_avantage) %}
+
+                {% for argument in sub_advantage.avantages %}
+
+                    <h4>{{ argument.avantage }}</h4>
+                    {% set level3 = fn('sanitize_title',argument.avantage) %}
+
+                    {# Offers values #}
+                    <div class="offer-group">
+                        {% for offer in offers %}
+                            <div>
+                                {% set parent = offer.meta(level1) %}
+
+                                {# Check if it's a text, a bool or a multiline #}
+
+                                {% if argument.type_de_champs == 'text' %}
+
+                                    {% if attribute(attribute(parent,level2),level3) is not empty %}
+                                        {{ attribute(attribute(parent,level2),level3) }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+
+                                {% elseif argument.type_de_champs == 'wysiwyg' %}
+
+                                    {% if attribute(attribute(parent,level2),level3) is not empty %}
+                                        {{ attribute(attribute(parent,level2),level3) }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+
+                                {% elseif argument.type_de_champs == 'bool' %}
+
+                                    {% if attribute(attribute(parent,level2),level3) %}
+                                        ✔
+                                    {% else %}
+                                        -
+                                    {% endif %}
+
+                                {% elseif argument.type_de_champs == 'lines' %}
+
+                                    {% if attribute(attribute(parent,level2),level3) is not empty %}
+                                        <p>{{ attribute(attribute(parent,level2),level3).line1 }}</p>
+                                        <p>{{ attribute(attribute(parent,level2),level3).line2 }}</p>
+                                    {% else %}
+                                        -
+                                    {% endif %}
+
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+
+                {% endfor %}
+
+            {% endfor %}
+
+        {% endfor %}
+
+    </div>
+
+    {{ post.mentions_legales }}
+
+{% endblock %}
